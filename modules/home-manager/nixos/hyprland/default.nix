@@ -16,7 +16,7 @@
   };
 
   home.file =
-    let wal = config.wal.enable; in 
+    let wal = config.wal.enable; in
     lib.mkMerge [
       {
         ".config/hypr/hyprland.conf".source = ./hyprland.conf;

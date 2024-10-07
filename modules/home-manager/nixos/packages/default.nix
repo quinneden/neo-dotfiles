@@ -1,7 +1,7 @@
 {pkgs, inputs, ...}: {
   imports = [
-    ../packages
-    ./scripts
+    ../../packages/default.nix
+    ../../scripts/default.nix
   ];
 
   packages = with pkgs; {
@@ -34,6 +34,7 @@
       vagrant
       python312
       gtrash
+      xwaylandvideobridge
     ];
     cli = [
       bat

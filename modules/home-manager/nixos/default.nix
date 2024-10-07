@@ -1,16 +1,20 @@
-{...}: {
+{pkgs, ...}: {
   imports = [
-    ./ags #Bar
-    ./alacritty #Terminal emulator
+    ./ags
+    ./alacritty
     ./distrobox
-    ./extra #Others
-    ./firefox #Firefox
+    ./extra
+    ./firefox
+    ./fonts
     ./git
     ./gtk
-    ./hyprland #WM
-    ./pywal #Colorscheme generation
-    ./rofi #Launcher
+    ./hyprland
+    ./kitty
+    ./packages
+    ./pywal
+    ./rofi
     ./tmux
+    ./vscodium
     ./zsh
   ];
 }
