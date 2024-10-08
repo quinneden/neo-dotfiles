@@ -6,26 +6,10 @@
   ...
 }: {
   imports = [
-    ../home-manager/ags.nix
-    ../home-manager/blackbox.nix
-    ../home-manager/browser.nix
-    ../home-manager/dconf.nix
-    ../home-manager/distrobox.nix
-    ../home-manager/firefox.nix
-    ../home-manager/git.nix
-    ../home-manager/hyprland.nix
-    ../home-manager/lf.nix
-    ../home-manager/micro.nix
-    ../home-manager/packages.nix
-    ../home-manager/sh.nix
-    ../home-manager/starship.nix
-    ../home-manager/theme.nix
-    ../home-manager/tmux.nix
-    ../home-manager/wezterm.nix
-    ../home-manager/alacritty.nix
-    ../home-manager/kitty.nix
-    ../home-manager/vscodium.nix
+    ../../modules/home-manager/nixos
   ];
+
+  wal.enable = true;
 
   home = {
     sessionVariables = {
@@ -44,6 +28,8 @@
       "$HOME/.local/bin"
     ];
   };
+
+  programs.home-manager.enable = true;
 
   home.stateVersion = "24.11";
 }

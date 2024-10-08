@@ -70,7 +70,7 @@
         inherit system pkgs;
         specialArgs = {inherit inputs dotDir secrets;};
         modules = [
-          ./hosts/macmini/darwin
+          ./hosts/darwin
           home-manager.darwinModules.default
           {networking.hostName = "macos-macmini";}
         ];
@@ -90,17 +90,7 @@
         specialArgs = {inherit inputs dotDir secrets self;};
         modules = [
           ./hosts/nixos
-          agenix.nixosModules.default
           lix-module.nixosModules.lixFromNixpkgs
-          nixos-apple-silicon.nixosModules.default
-          home-manager.nixosModules.home-manager
-          {
-            networking.hostName = "nixos-macmini";
-            age = {
-              secrets.common.file = secrets/common.age;
-              identityPaths = [ "/var/lib/persistent/ssh_host_ed25519_key" ];
-            };
-          }
         ];
       };
     };

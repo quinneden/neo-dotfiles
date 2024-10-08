@@ -1,9 +1,9 @@
-{ pkgs, ... } : 
+{ pkgs, ... } :
 {
   programs.tmux = {
     enable = true;
     clock24 = true;
-    keyMode = "vi";
+    # keyMode = "";
     mouse = true;
     baseIndex = 1;
     escapeTime = 0;

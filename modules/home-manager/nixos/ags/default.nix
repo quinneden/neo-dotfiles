@@ -16,7 +16,7 @@
   };
 
   home.file =
-    let wal = config.wal.enable; in 
+    let wal = config.wal.enable; in
     lib.mkMerge [
       {
         ".config/ags/config.js".source = ./config/config.js;

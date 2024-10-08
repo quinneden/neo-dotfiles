@@ -5,19 +5,17 @@
   ...
 }: let
   aliases = {
-    "db" = "distrobox";
+    "bs" = "stat -c%s";
     "cddf" = "cd $dotdir";
+    "cddl" = "cd ~/Downloads";
     "code" = "codium";
-    "py" = "python";
-    "rf" = "rm -rf";
-    "tree" = "eza --icons --tree --group-directories-first -I '.git*'";
-    "flake-update" = "sudo nix flake update ~/.dotfiles";
+    "db" = "distrobox";
     "gst" = "git status";
-    "gsw" = "git switch -c";
-    "gb" = "git branch";
-    "gch" = "git checkout";
-    "ga" = "git add";
-    "gr" = "git reset --soft HEAD~1";
+    "gsur" = "git submodule update --init --recursive";
+    "l" = "eza -la --group-directories-first";
+    "ll" = "eza -glAh --octal-permissions --group-directories-first";
+    "ls" = "eza -A";
+    "tree" = "eza -ATL3 --git-ignore";
   };
 in {
   options.shellAliases = with lib;
@@ -37,6 +35,7 @@ in {
       oh-my-zsh = {
         enable = true;
         plugins = ["fzf" "eza" "zoxide" "direnv"];
+        custom = "${config.xdg.configHome}/zsh";
       };
       initExtra = ''
         zstyle ':completion:*' menu select
@@ -44,29 +43,37 @@ in {
         bindkey "^[[1;5D" backward-word
         unsetopt BEEP
 
-        for f (${config.xdg.configHome}/zsh/{functions,completions}/*(N.)); do source $f; done
+        HISTFILE="$ZDOTDIR/.zsh_history"; export HISTFILE
 
-        [[ $(type -w z) == 'z: function' ]] && alias cd='z' || true
+        for f ($HOME/.config/zsh/functions/*(N.)); do source $f; done
 
-        # if [[ $TERM_PROGRAM == 'vscode' ]]; then
-        #   autoload -U promptinit; promptinit
-        #   prompt pure
-        # fi
+        if type zoxide &>/dev/null; then eval "$(zoxide init zsh)"; fi
+        if type z &>/dev/null; then alias cd='z'; fi
+
+        if [[ $TERM_PROGRAM == 'vscode' ]]; then
+          autoload -U promptinit; promptinit
+          prompt pure
+        fi
       '';
       initExtraBeforeCompInit = ''
-        fpath+=(${config.xdg.configHome}/zsh/completions)
+        fpath+=("${config.xdg.configHome}/zsh/completions" "${pkgs.lix}/share/zsh/site-functions")
       '';
       sessionVariables = {
-        LC_ALL = "en_US.UTF-8";
+        compdir = "${config.xdg.configHome}/zsh/completions";
         dotdir = "/home/quinn/.dotfiles";
         EDITOR = "mi";
+        LANG = "en_US.UTF-8";
+        LC_ALL = "en_US.UTF-8";
+        MICRO_TRUECOLOR = "1";
+        NIXOS_CONFIG = "$HOME/.dotfiles";
+        PAGER = "bat --style=grid,numbers --wrap=never";
       };
     };
 
     bash = {
-      shellAliases = aliases // config.shellAliases;
       enable = true;
       initExtra = "SHELL=${pkgs.bash}/bin/bash";
+      shellAliases = aliases // config.shellAliases;
     };
   };
 }

@@ -5,8 +5,6 @@
   ...
 }: let
   micro-autofmt-nix = pkgs.callPackage ./micro-autofmt-nix.nix {};
-  operator-mono-nf = pkgs.callPackage ./operator-mono-nf.nix {};
-  operator-mono-lig = pkgs.callPackage ./operator-mono-lig.nix {};
 in {
   xdg.configFile."micro/plug/micro-autofmt" = {
     source = micro-autofmt-nix;

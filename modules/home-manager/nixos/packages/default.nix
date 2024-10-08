@@ -1,7 +1,7 @@
 {pkgs, inputs, ...}: {
   imports = [
-    ../../packages/default.nix
-    ../../scripts/default.nix
+    ../../packages
+    ../../scripts
   ];
 
   packages = with pkgs; {

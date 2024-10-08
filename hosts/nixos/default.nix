@@ -10,6 +10,9 @@
   username = "quinn";
 in {
   imports = [
+    inputs.home-manager.nixosModules.default
+    inputs.nixos-apple-silicon.nixosModules.default
+    inputs.agenix.nixosModules.default
   ];
 
   boot = {
@@ -46,6 +49,27 @@ in {
       "docker"
     ];
   };
+
+  age = {
+    secrets.common.file = secrets/common.age;
+    identityPaths = [ "/var/lib/persistent/ssh_host_ed25519_key" ];
+  };
+
+  time.timeZone = "America/Los_Angeles";
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "en_US.UTF-8";
+    LC_IDENTIFICATION = "en_US.UTF-8";
+    LC_MEASUREMENT = "en_US.UTF-8";
+    LC_MONETARY = "en_US.UTF-8";
+    LC_NAME = "en_US.UTF-8";
+    LC_NUMERIC = "en_US.UTF-8";
+    LC_PAPER = "en_US.UTF-8";
+    LC_TELEPHONE = "en_US.UTF-8";
+    LC_TIME = "en_US.UTF-8";
+  };
+
+  console.useXkbConfig = true;
 
   home-manager = {
     backupFileExtension = "backup";
@@ -156,6 +180,7 @@ in {
   };
 
   networking = {
+    hostName = "nixos-macmini";
     networkmanager = {
       enable = true;
       wifi.backend = "iwd";
