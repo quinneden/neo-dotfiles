@@ -47,14 +47,14 @@
       ];
       # extra-trusted-substituters = config.nix.settings.extra-substituters;
       extra-trusted-public-keys = [
-        "${config.age.secrets.cachix.quinneden.pubkey.path}"
-        "${config.age.secrets.cachix.nixos-asahi.pubkey.path}"
+        "${secrets.cachix.quinneden.public-key}"
+        "${secrets.cachix.nixos-asahi.public-key}"
         "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
       ];
       warn-dirty = false;
       extra-nix-path = "nixpkgs=flake:nixpkgs";
       trusted-users = ["quinn" "root"];
-      access-tokens = ["github=${config.age.secrets.github.authtoken.path}"];
+      access-tokens = ["github=${secrets.github.api}"];
     };
 
     # buildMachines = [
@@ -78,16 +78,16 @@
           package = pkgs.lix;
           settings = {
             max-jobs = 6;
-            access-tokens = ["github=${config.age.secrets.github.authtoken.path}"];
+            access-tokens = ["github=${secrets.github.api}"];
             extra-substituters = [
-              "${config.age.secrets.cachix.quinneden.url.path}"
-              "${config.age.secrets.cachix.nixos-asahi.url.path}"
+              "${secrets.cachix.quinneden.url}"
+              "${secrets.cachix.nixos-asahi.url}"
               "https://cache.lix.systems"
             ];
             # extra-trusted-substituters = config.nix.settings.substituters;
             extra-trusted-public-keys = [
-              "${config.age.secrets.cachix.quinneden.public-key.path}"
-              "${config.age.secrets.cachix.nixos-asahi.public-key.path}"
+              "${secrets.cachix.quinneden.public-key}"
+              "${secrets.cachix.nixos-asahi.public-key}"
               "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
             ];
           };

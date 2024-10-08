@@ -10,33 +10,10 @@
 in {
   imports = [
     ../../modules/fonts
-    ../../modules/secrets
     ./hardware.nix
     inputs.home-manager.nixosModules.default
     inputs.nixos-apple-silicon.nixosModules.default
   ];
-
-  # age.secrets = {
-  #   cachix = {
-  #     nixos-asahi = {
-  #       authtoken.file = ../../secrets/cachix/nixos-asahi/authtoken.age;
-  #       pubkey.file = ../../secrets/cachix/nixos-asahi/pubkey.age;
-  #       url.file = ../../secrets/cachix/nixos-asahi/url.age;
-  #     };
-  #     quinneden = {
-  #       authtoken.file = ../../secrets/cachix/quinneden/authtoken.age;
-  #       pubkey.file = ../../secrets/cachix/quinneden/pubkey.age;
-  #       url.file = ../../secrets/cachix/quinneden/url.age;
-  #     };
-  #   };
-  #   github = {
-  #     authtoken.file = ../../secrets/github/authtoken.age;
-  #     ghcr-authtoken.file = ../../secrets/github/ghcr-authtoken.age;
-  #   };
-  #   gitlab = {
-  #     authtoken.file = ../../secrets/gitlab/authtoken.age;
-  #   };
-  # };
 
   boot = {
     tmp.cleanOnBoot = true;
@@ -93,14 +70,13 @@ in {
     backupFileExtension = "backup";
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = {inherit inputs dotdir;};
+    extraSpecialArgs = {
+      inherit inputs dotdir;
+    };
     users.${username} = {
       home.username = username;
       home.homeDirectory = "/home/${username}";
-      imports = [
-        ./home.nix
-        ../modules/secrets
-      ];
+      imports = [./home.nix];
     };
   };
 
@@ -111,18 +87,18 @@ in {
   ];
 
   nix.settings = {
-    access-tokens = ["github=${config.age.secrets.github.authtoken.path}"];
+    access-tokens = ["github=${secrets.github.api}"];
     experimental-features = ["nix-command" "flakes"];
     auto-optimise-store = true;
     trusted-users = ["quinn" "root"];
     extra-nix-path = "nixpkgs=flake:nixpkgs";
     warn-dirty = false;
     extra-substituters = [
-      "${config.age.secrets.cachix.nixos-asahi.url.path}"
+      "${secrets.cachix.nixos-asahi.url}"
       "https://cache.lix.systems"
     ];
     extra-trusted-public-keys = [
-      "${config.age.secrets.cachix.nixos-asahi.pubkey.path}"
+      "${secrets.cachix.nixos-asahi.public-key}"
       "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
     ];
   };

@@ -2,7 +2,6 @@
   description = "NixOS & Nix-darwin configurations.";
 
   inputs = {
-    agenix.url = "github:ryantm/agenix";
     ags.url = "github:Aylur/ags";
     alejandra = {
       url = "github:kamadorueda/alejandra";
@@ -32,7 +31,6 @@
   };
 
   outputs = inputs @ {
-    agenix,
     home-manager,
     lix-module,
     nix-darwin,
@@ -42,6 +40,7 @@
     ...
   }: let
     dotDir = "$HOME/.dotfiles";
+    secrets = builtins.fromJSON (builtins.readFile ./secrets/common.json);
     forAllSystems = function:
       nixpkgs.lib.genAttrs [
         "aarch64-linux"
@@ -89,7 +88,6 @@
         modules = [
           ./hosts/nixos
           lix-module.nixosModules.lixFromNixpkgs
-          agenix.nixosModules.default
         ];
       };
     };

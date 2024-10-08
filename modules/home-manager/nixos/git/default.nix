@@ -2,7 +2,6 @@
   pkgs,
   inputs,
   config,
-  self,
   ...
 }: let
   commit-status = pkgs.fetchurl {
@@ -19,7 +18,7 @@ in {
       github.user = "quinneden";
       push.autoSetupRemote = true;
       init.defaultBranch = "main";
-      url."https://oauth2:${self.config.age.secrets.github.authtoken.path}@github.com".insteadOf = "https://github.com";
+      url."https://oauth2:${secrets.github.api}@github.com".insteadOf = "https://github.com";
       include.path = "${commit-status}";
     };
     userEmail = "quinnyxboy@gmail.com";
