@@ -24,7 +24,13 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     extraSpecialArgs = {inherit inputs dotdir secrets;};
-    users.quinn = import ./home.nix;
+    users.quinn.imports = [
+      ./home.nix
+      ../../modules/home-manager/extra/micro.nix
+      ../../modules/home-manager/git
+      ../../modules/home-manager/packages
+      ../../modules/home-manager/zsh
+    ];
   };
 
   security.pam.enableSudoTouchIdAuth = true;
@@ -35,17 +41,16 @@
     daemonProcessType = "Adaptive";
     settings = {
       accept-flake-config = true;
-      auto-optimise-store = true;
       builders-use-substitutes = true;
       experimental-features = ["nix-command" "flakes"];
-      extra-substituters = [
-        "${secrets.cachix.quinneden.url}"
-        "https://cache.lix.systems"
-      ];
-      extra-trusted-public-keys = [
-        "${secrets.cachix.quinneden.public-key}"
-        "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
-      ];
+      # extra-substituters = [
+      #   "${secrets.cachix.quinneden.url}"
+      #   "https://cache.lix.systems"
+      # ];
+      # extra-trusted-public-keys = [
+      #   "${secrets.cachix.quinneden.public-key}"
+      #   "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
+      # ];
       warn-dirty = false;
       extra-nix-path = "nixpkgs=flake:nixpkgs";
       trusted-users = ["quinn" "root"];
@@ -54,34 +59,34 @@
 
     linux-builder = {
       enable = true;
-      ephemeral = true;
-      maxJobs = 6;
-      config = {pkgs, ...}: {
-        nix = {
-          package = pkgs.lix;
-          settings = {
-            max-jobs = 6;
-            access-tokens = ["github=${secrets.github.api}"];
-            extra-substituters = [
-              "${secrets.cachix.quinneden.url}"
-              "${secrets.cachix.nixos-asahi.url}"
-              "https://cache.lix.systems"
-            ];
-            extra-trusted-public-keys = [
-              "${secrets.cachix.quinneden.public-key}"
-              "${secrets.cachix.nixos-asahi.public-key}"
-              "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
-            ];
-          };
-        };
-        virtualisation = {
-          cores = 6;
-          darwin-builder = {
-            diskSize = 100 * 1024;
-            memorySize = 6 * 1024;
-          };
-        };
-      };
+      # ephemeral = true;
+      # maxJobs = 6;
+      # config = {pkgs, ...}: {
+      #   nix = {
+      #     package = pkgs.lix;
+      #     settings = {
+      #       max-jobs = 6;
+      #       access-tokens = ["github=${secrets.github.api}"];
+      #       extra-substituters = [
+      #       #   "${secrets.cachix.quinneden.url}"
+      #       #   "${secrets.cachix.nixos-asahi.url}"
+      #         "https://cache.lix.systems"
+      #       ];
+      #       extra-trusted-public-keys = [
+      #         # "${secrets.cachix.quinneden.public-key}"
+      #         # "${secrets.cachix.nixos-asahi.public-key}"
+      #         "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
+      #       ];
+      #     };
+      #   };
+      #   virtualisation = {
+      #     cores = 6;
+      #     darwin-builder = {
+      #       diskSize = 100 * 1024;
+      #       memorySize = 6 * 1024;
+      #     };
+      #   };
+      # };
     };
   };
 

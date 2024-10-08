@@ -4,8 +4,8 @@
   ...
 }: {
   imports = [
-    ../../../packages
-    ../../../scripts
+    ./packages-module.nix
+  #   ../../scripts
   ];
 
   packages = with pkgs; {
@@ -21,7 +21,6 @@
       bat
       cmake
       direnv
-      eza
       fd
       fzf
       gcc
@@ -46,12 +45,13 @@
       vagrant
       vesktop
       xwaylandvideobridge
-      zoxide
     ];
     cli = [
       cachix
+      eza
       inputs.alejandra.defaultPackage.${system}
       inputs.nix-shell-scripts.packages.${system}.default
+      zoxide
     ];
   };
 }

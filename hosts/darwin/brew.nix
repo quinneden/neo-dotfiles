@@ -95,7 +95,6 @@
       "whalebrew"
       "yapf"
       "zlib"
-      "zoxide"
     ];
     masApps = {
       "Adobe Lightroom" = 1451544217;

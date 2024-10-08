@@ -1,26 +1,19 @@
-{
-  pkgs,
-  lib,
-  ...
-}: {
-  imports =
-    lib.mkMerge (mkIf pkgs.stdenv.isLinux [
-      ./ags
-      ./alacritty
-      ./distrobox
-      ./extra
-      ./firefox
-      ./gtk
-      ./hyprland
-      ./kitty
-      ./pywal
-      ./rofi
-      ./tmux
-      ./vscodium
-    ])
-    ++ [
-      ./git
-      ./packages
-      ./zsh
-    ];
+{...}: {
+  imports = [
+    ./ags
+    ./alacritty
+    ./distrobox
+    ./extra/hyprland-portal-conf.nix
+    ./firefox
+    ./git
+    ./gtk
+    ./hyprland
+    ./kitty
+    ./packages
+    ./pywal
+    ./rofi
+    ./tmux
+    ./vscodium
+    ./zsh
+  ];
 }

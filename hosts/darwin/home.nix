@@ -1,11 +1,9 @@
 {
-  config,
   inputs,
-  lib,
+  config,
   pkgs,
   ...
 }: {
-  imports = [../../modules/home-manager];
 
   home.file.".hushlogin".text = "";
 

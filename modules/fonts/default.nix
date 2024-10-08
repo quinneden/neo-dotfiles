@@ -1,6 +1,7 @@
 {
   pkgs,
   inputs,
+  lib,
   ...
 }: let
   operator-mono-lig = pkgs.callPackage ./operator-mono-lig.nix {inherit pkgs;};
@@ -25,9 +26,9 @@ in {
         ];
       })
     ];
-    fontconfig = {
-      enable = true;
-      hinting.autohint = true;
-    };
+    # fontconfig = {
+    #   enable = true;
+    #   hinting.autohint = true;
+    # };
   };
 }

@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib) types;
-  inherit (lib.modules) mkIf;
+  inherit (lib.modules) lib.mkIf;
   inherit (lib.options) mkOption mkEnableOption;
 
   cfg = config.programs.distrobox;
@@ -100,7 +100,7 @@ in {
         fi
       '';
   in
-    mkIf cfg.enable {
+    lib.mkIf cfg.enable {
       home.packages = [pkgs.distrobox] ++ (map mkBoxAlias boxes);
       home.file = builtins.foldl' (acc: x: acc // x) {} (map mkBoxLinks boxes);
     };
