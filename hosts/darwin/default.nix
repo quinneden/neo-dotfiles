@@ -2,6 +2,7 @@
   config,
   inputs,
   dotDir,
+  secrets,
   lib,
   pkgs,
   ...

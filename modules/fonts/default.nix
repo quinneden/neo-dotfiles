@@ -17,7 +17,7 @@ in {
       (nerdfonts.override {
         fonts = [
           "NerdFontsSymbolsOnly"
-          "CaskaydiaCode"
+          "CascadiaCode"
           "Hack"
           "FiraCode"
           "VictorMono"

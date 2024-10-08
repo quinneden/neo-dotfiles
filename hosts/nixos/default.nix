@@ -2,6 +2,7 @@
   config,
   dotdir,
   inputs,
+  secrets,
   pkgs,
   lib,
   ...
@@ -71,7 +72,7 @@ in {
     useGlobalPkgs = true;
     useUserPackages = true;
     extraSpecialArgs = {
-      inherit inputs dotdir;
+      inherit inputs dotdir secrets;
     };
     users.${username} = {
       home.username = username;
@@ -168,7 +169,7 @@ in {
     flatpak.enable = true;
     openssh.enable = true;
     xserver = {
-      enable = true;
+      enable = false;
       xkb.layout = "us";
     };
   };

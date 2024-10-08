@@ -2,6 +2,7 @@
   pkgs,
   inputs,
   config,
+  secrets,
   ...
 }: let
   commit-status = pkgs.fetchurl {

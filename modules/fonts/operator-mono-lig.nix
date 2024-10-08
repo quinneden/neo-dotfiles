@@ -3,7 +3,7 @@ pkgs.stdenv.mkDerivation {
   pname = "operator-mono-lig";
   version = "1.0";
 
-  src = ../../../assets/OperatorMonoLig.zip;
+  src = ../../assets/OperatorMonoLig.zip;
 
   unpackPhase = ''
     runHook preUnpack

@@ -3,7 +3,7 @@ pkgs.stdenv.mkDerivation {
   pname = "operator-mono-nf";
   version = "1.0";
 
-  src = ../../../assets/OperatorMonoNF.zip;
+  src = ../../assets/OperatorMonoNF.zip;
 
   unpackPhase = ''
     runHook preUnpack

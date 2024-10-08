@@ -84,7 +84,7 @@
     in {
       "nixos" = nixpkgs.lib.nixosSystem {
         inherit pkgs system;
-        specialArgs = {inherit inputs dotDir self;};
+        specialArgs = {inherit inputs dotDir self secrets;};
         modules = [
           ./hosts/nixos
           lix-module.nixosModules.lixFromNixpkgs

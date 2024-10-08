@@ -2,11 +2,10 @@
 {
   imports = [ inputs.ags.homeManagerModules.default ];
 
-  home.packages = [ pkgs.networkmanagerapplet ];
+  home.packages = with pkgs; [networkmanagerapplet];
 
   programs.ags = {
     enable = true;
-
     # additional packages to add to gjs's runtime
     extraPackages = with pkgs; [
       gtksourceview
