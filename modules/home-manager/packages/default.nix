@@ -1,4 +1,8 @@
-{pkgs, inputs, ...}: {
+{
+  pkgs,
+  inputs,
+  ...
+}: {
   imports = [
     ../../../packages
     ../../../scripts
@@ -14,39 +18,40 @@
       zstd
     ];
     linux = [
+      bat
+      cmake
       direnv
-      nodejs
-      vesktop
-      rustup
-      rustc
+      eza
+      fd
+      fzf
       gcc
+      gh
       git-crypt
       glow
       gnumake
+      gnupg
       gptfdisk
-      cmake
+      gtrash
+      jq
+      nodejs
       openssl
       pass
       pkg-config
       pure-prompt
-      rclone
-      zoxide
-      vagrant
       python312
-      gtrash
+      rclone
+      ripgrep
+      rustc
+      rustup
+      vagrant
+      vesktop
       xwaylandvideobridge
+      zoxide
     ];
     cli = [
-      bat
       cachix
-      eza
-      fd
-      fzf
-      gh
-      gnupg
-      ripgrep
-      jq
       inputs.alejandra.defaultPackage.${system}
+      inputs.nix-shell-scripts.packages.${system}.default
     ];
   };
 }

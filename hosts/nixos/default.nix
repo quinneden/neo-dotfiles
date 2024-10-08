@@ -2,13 +2,11 @@
   config,
   dotdir,
   inputs,
-  secrets,
-  pkgs,
   lib,
+  pkgs,
+  secrets,
   ...
-}: let
-  username = "quinn";
-in {
+}: {
   imports = [
     ./hardware.nix
     ../../modules/fonts
@@ -37,7 +35,7 @@ in {
     };
   };
 
-  users.users.${username} = {
+  users.users.quinn = {
     isNormalUser = true;
     initialPassword = username;
     shell = "${pkgs.zsh}/bin/zsh";
@@ -74,9 +72,9 @@ in {
     extraSpecialArgs = {
       inherit inputs dotdir secrets;
     };
-    users.${username} = {
-      home.username = username;
-      home.homeDirectory = "/home/${username}";
+    users.quinn = {
+      home.username = "quinn";
+      home.homeDirectory = "/home/quinn";
       imports = [./home.nix];
     };
   };
@@ -117,8 +115,8 @@ in {
   programs.dconf.enable = true;
 
   programs.gnupg.agent = {
-     enable = true;
-     pinentryPackage = pkgs.pinentry-curses;
+    enable = true;
+    pinentryPackage = pkgs.pinentry-curses;
   };
 
   programs.direnv = {
@@ -209,5 +207,4 @@ in {
   };
 
   system.stateVersion = "24.11";
-
 }

@@ -1,15 +1,17 @@
 {
   config,
+  dotdir,
   inputs,
-  dotDir,
-  secrets,
   lib,
   pkgs,
+  secrets,
   ...
 }: {
   imports = [
+    ./brew.nix
     ./system.nix
-    ../modules/darwin/brew.nix
+    ../../modules/fonts
+    inputs.home-manager.darwinModules.default
   ];
 
   users.users.quinn = {
@@ -21,19 +23,14 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = {
-      inherit inputs dotDir secrets;
-    };
+    extraSpecialArgs = {inherit inputs dotDir secrets;};
     users.quinn = import ./home.nix;
   };
 
   security.pam.enableSudoTouchIdAuth = true;
 
-  nix.configureBuildUsers = true;
-  #ids.uids.nixbld = lib.mkForce 40000;
-  #ids.gids.nixbld = 30000;
-
   nix = {
+    configureBuildUsers = true;
     distributedBuilds = true;
     daemonProcessType = "Adaptive";
     settings = {
@@ -42,14 +39,11 @@
       builders-use-substitutes = true;
       experimental-features = ["nix-command" "flakes"];
       extra-substituters = [
-        "${config.age.secrets.cachix.quinneden.url.path}"
-        "${config.age.secrets.cachix.nixos-asahi.url.path}"
+        "${secrets.cachix.quinneden.url}"
         "https://cache.lix.systems"
       ];
-      # extra-trusted-substituters = config.nix.settings.extra-substituters;
       extra-trusted-public-keys = [
         "${secrets.cachix.quinneden.public-key}"
-        "${secrets.cachix.nixos-asahi.public-key}"
         "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
       ];
       warn-dirty = false;
@@ -58,23 +52,11 @@
       access-tokens = ["github=${secrets.github.api}"];
     };
 
-    # buildMachines = [
-    #   {
-    #     hostName = "lima-nix-builder";
-    #     system = "aarch64-linux";
-    #     maxJobs = 6;
-    #     protocol = "ssh-ng";
-    #     sshUser = "root";
-    #     sshKey = "${config.users.users.quinn.home}/.lima/_config/user";
-    #     supportedFeatures = ["benchmark" "big-parallel" "nixos-test" "kvm"];
-    #   }
-    # ];
-
     linux-builder = {
       enable = true;
       ephemeral = true;
       maxJobs = 6;
-      config = ({pkgs, ...}: {
+      config = {pkgs, ...}: {
         nix = {
           package = pkgs.lix;
           settings = {
@@ -85,7 +67,6 @@
               "${secrets.cachix.nixos-asahi.url}"
               "https://cache.lix.systems"
             ];
-            # extra-trusted-substituters = config.nix.settings.substituters;
             extra-trusted-public-keys = [
               "${secrets.cachix.quinneden.public-key}"
               "${secrets.cachix.nixos-asahi.public-key}"
@@ -100,7 +81,7 @@
             memorySize = 6 * 1024;
           };
         };
-      });
+      };
     };
   };
 

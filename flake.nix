@@ -54,7 +54,7 @@
       system = "aarch64-darwin";
       pkgs = import nixpkgs {
         inherit system;
-        overlays = [lix-module.overlays.lixFromNixpkgs];
+        # overlays = [lix-module.overlays.lixFromNixpkgs];
         config.allowUnfree = true;
       };
     in {
@@ -63,8 +63,7 @@
         specialArgs = {inherit inputs dotDir;};
         modules = [
           ./hosts/darwin
-          home-manager.darwinModules.default
-          {networking.hostName = "macos-macmini";}
+          lix-module.nixosModules.lixFromNixpkgs
         ];
       };
     };
@@ -82,16 +81,9 @@
         specialArgs = {inherit inputs dotDir self secrets;};
         modules = [
           ./hosts/nixos
-          lix-module.nixosModules.lixFromNixpkgs
+          lix-module.nixosModules.default
         ];
       };
     };
   };
 }
-
-
-
-
-
-
-
