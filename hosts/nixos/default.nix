@@ -166,11 +166,12 @@
   security.sudo.wheelNeedsPassword = false;
 
   services = {
+    dbus.enable = true;
     blueman.enable = true;
     flatpak.enable = true;
     openssh.enable = true;
     xserver = {
-      enable = false;
+      enable = true;
       xkb.layout = "us";
     };
   };

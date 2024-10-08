@@ -1,20 +1,19 @@
-{ pkgs, ...}:
-{
+{pkgs, ...}: {
   home.packages = with pkgs; [
     #File browser + thumbnail service
     xfce.thunar
-    # xfce.tumbler
+    xfce.tumbler
   ];
 
-  # xdg.mime.enable = false;
-  # xdg.mimeApps = {
-  #   enable = true;
-  #   defaultApplications = {
-  #     "inode/directory" = ["Thunar.desktop"];
-  #     "image/png" = ["imv.desktop"];
-  #     "image/jpeg" = ["imv.desktop"];
-  #   };
-  # };
+  xdg.mime.enable = true;
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "inode/directory" = ["Thunar.desktop"];
+      "image/png" = ["imv.desktop"];
+      "image/jpeg" = ["imv.desktop"];
+    };
+  };
 
   gtk = {
     enable = true;
@@ -24,8 +23,8 @@
     iconTheme.package = pkgs.papirus-maia-icon-theme;
     gtk3.extraConfig = {
       gtk-application-prefer-dark-theme = true;
-      gtk-key-theme-name    = "Default";
-      gtk-icon-theme-name   = "Papirus-Dark-Maia";
+      gtk-key-theme-name = "Default";
+      gtk-icon-theme-name = "Papirus-Dark-Maia";
       gtk-cursor-theme-name = "Capitaine Cursors - White";
     };
   };
