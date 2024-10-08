@@ -11,10 +11,7 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    hyprland = {
-      url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
     lix-module = {
       url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.0.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -52,8 +49,6 @@
         }));
   in {
     formatter = forAllSystems (system: inputs.alejandra.defaultPackage.${system});
-
-    packages.aarch64-linux.ags = nixpkgs.callPackage ./ags {inherit inputs;};
 
     darwinConfigurations = let
       system = "aarch64-darwin";

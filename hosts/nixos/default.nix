@@ -10,8 +10,8 @@
   username = "quinn";
 in {
   imports = [
-    ../../modules/fonts
     ./hardware.nix
+    ../../modules/fonts
     inputs.home-manager.nixosModules.default
     inputs.nixos-apple-silicon.nixosModules.default
   ];
@@ -30,7 +30,7 @@ in {
     withRust = true;
     setupAsahiSound = true;
     useExperimentalGPUDriver = true;
-    experimentalGPUInstallMode = "overlay";
+    experimentalGPUInstallMode = "replace";
     peripheralFirmwareDirectory = builtins.fetchTarball {
       url = "https://qeden.me/asahi-firmware.tar.gz";
       sha256 = "sha256-tsRkDsXr7NYsNLJoWHBd6xaybtT+SVw+9HYn4zQmezo=";
@@ -46,8 +46,8 @@ in {
       "wheel"
       # "audio"
       # "video"
-      "libvirtd"
-      "docker"
+      # "libvirtd"
+      # "docker"
     ];
   };
 
@@ -81,11 +81,11 @@ in {
     };
   };
 
-  environment.pathsToLink = [
-    "/share/zsh"
-    "/share/qemu"
-    "/share/edk2"
-  ];
+  # environment.pathsToLink = [
+  #   "/share/zsh"
+  #   "/share/qemu"
+  #   "/share/edk2"
+  # ];
 
   nix.settings = {
     access-tokens = ["github=${secrets.github.api}"];
@@ -96,18 +96,22 @@ in {
     warn-dirty = false;
     extra-substituters = [
       "${secrets.cachix.nixos-asahi.url}"
+      "${secrets.cachix.quinneden.url}"
       "https://cache.lix.systems"
+      "https://hyprland.cachix.org"
     ];
     extra-trusted-public-keys = [
       "${secrets.cachix.nixos-asahi.public-key}"
+      "${secrets.cachix.quinneden.public-key}"
       "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
+      "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
     ];
   };
 
   # virtualisation
   virtualisation = {
-    podman.enable = true;
-    libvirtd.enable = true;
+    podman.enable = false;
+    libvirtd.enable = false;
   };
 
   programs.dconf.enable = true;
@@ -137,14 +141,14 @@ in {
 
   programs.hyprland = {
     enable = true;
-    xwayland.enable = true;
+    package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
   };
 
   xdg.portal = {
     enable = true;
     extraPortals = [
       pkgs.xdg-desktop-portal-gtk
-      pkgs.xdg-desktop-portal-hyprland
     ];
   };
 
@@ -157,7 +161,6 @@ in {
     btrfs-progs
     micro
     ripgrep
-    neovim
     git
     wget
   ];

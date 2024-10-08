@@ -1,8 +1,8 @@
-{ pkgs, config, lib,... }:
+{ pkgs, config, lib, inputs, ... }:
 {
   home.packages = with pkgs; [
+    inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland
     swww
-    hyprland
     grim
     slurp
     swappy
