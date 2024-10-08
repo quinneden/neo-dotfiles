@@ -21,4 +21,3 @@
 in {
   home.packages = [nix-clean];
 }
-

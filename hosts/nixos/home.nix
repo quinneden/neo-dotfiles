@@ -18,10 +18,10 @@
       BAT_THEME = "base16";
       GOPATH = "${config.home.homeDirectory}/.local/share/go";
       GOMODCACHE = "${config.home.homeDirectory}/.cache/go/pkg/mod";
-      XDG_CACHE_HOME  = "${config.home.homeDirectory}/.cache";
+      XDG_CACHE_HOME = "${config.home.homeDirectory}/.cache";
       XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
       XDG_DATA_HOME = "${config.home.homeDirectory}/.local/share";
-      XDG_STATE_HOME  = "${config.home.homeDirectory}/.local/state";
+      XDG_STATE_HOME = "${config.home.homeDirectory}/.local/state";
     };
 
     sessionPath = [

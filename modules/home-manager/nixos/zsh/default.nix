@@ -18,6 +18,8 @@
     "tree" = "eza -ATL3 --git-ignore";
   };
 in {
+  imports = [./starship.nix];
+
   options.shellAliases = with lib;
     mkOption {
       type = types.attrsOf types.str;

@@ -74,7 +74,7 @@
       enable = true;
       ephemeral = true;
       maxJobs = 6;
-      config = ({pkgs, ...}: {
+      config = {pkgs, ...}: {
         nix = {
           package = pkgs.lix;
           settings = {
@@ -100,7 +100,7 @@
             memorySize = 6 * 1024;
           };
         };
-      });
+      };
     };
   };
 

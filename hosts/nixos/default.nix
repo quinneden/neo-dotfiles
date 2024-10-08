@@ -117,8 +117,8 @@ in {
   programs.dconf.enable = true;
 
   programs.gnupg.agent = {
-     enable = true;
-     pinentryPackage = pkgs.pinentry-curses;
+    enable = true;
+    pinentryPackage = pkgs.pinentry-curses;
   };
 
   programs.direnv = {
@@ -168,11 +168,12 @@ in {
   security.sudo.wheelNeedsPassword = false;
 
   services = {
+    dbus.enable = true;
     blueman.enable = true;
     flatpak.enable = true;
     openssh.enable = true;
     xserver = {
-      enable = false;
+      enable = true;
       xkb.layout = "us";
     };
   };
@@ -209,5 +210,4 @@ in {
   };
 
   system.stateVersion = "24.11";
-
 }

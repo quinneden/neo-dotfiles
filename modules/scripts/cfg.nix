@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: let
+{pkgs, ...}: let
   cfg = pkgs.writeShellScriptBin "cfg" ''
     dotdir="$HOME"/.dotfiles
 
@@ -71,5 +68,4 @@
 
     main "$@" && exit
   '';
-in
-  {home.packages = [cfg];}
+in {home.packages = [cfg];}
