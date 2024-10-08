@@ -23,7 +23,7 @@
   home-manager = {
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = {inherit inputs dotDir secrets;};
+    extraSpecialArgs = {inherit inputs dotdir secrets;};
     users.quinn = import ./home.nix;
   };
 

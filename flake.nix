@@ -24,6 +24,7 @@
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-shell-scripts.url = "github:quinneden/nix-shell-scripts";
     nixos-apple-silicon = {
       url = "github:tpwrules/nixos-apple-silicon";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -64,7 +65,7 @@
     in {
       "macos" = nix-darwin.lib.darwinSystem {
         inherit system pkgs;
-        specialArgs = {inherit inputs dotDir;};
+        specialArgs = {inherit inputs dotDir secrets;};
         modules = [
           ./hosts/darwin
           lix-module.nixosModules.lixFromNixpkgs
