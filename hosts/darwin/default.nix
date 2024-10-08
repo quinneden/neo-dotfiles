@@ -2,7 +2,6 @@
   config,
   inputs,
   dotDir,
-  secrets,
   lib,
   pkgs,
   ...
@@ -42,20 +41,20 @@
       builders-use-substitutes = true;
       experimental-features = ["nix-command" "flakes"];
       extra-substituters = [
-        "${secrets.cachix.quinneden.url}"
-        "${secrets.cachix.nixos-asahi.url}"
+        "${config.age.secrets.cachix.quinneden.url.path}"
+        "${config.age.secrets.cachix.nixos-asahi.url.path}"
         "https://cache.lix.systems"
       ];
       # extra-trusted-substituters = config.nix.settings.extra-substituters;
       extra-trusted-public-keys = [
-        "${secrets.cachix.quinneden.public-key}"
-        "${secrets.cachix.nixos-asahi.public-key}"
+        "${config.age.secrets.cachix.quinneden.pubkey.path}"
+        "${config.age.secrets.cachix.nixos-asahi.pubkey.path}"
         "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
       ];
       warn-dirty = false;
       extra-nix-path = "nixpkgs=flake:nixpkgs";
       trusted-users = ["quinn" "root"];
-      access-tokens = ["github=${secrets.github.api}"];
+      access-tokens = ["github=${config.age.secrets.github.authtoken.path}"];
     };
 
     # buildMachines = [
@@ -79,16 +78,16 @@
           package = pkgs.lix;
           settings = {
             max-jobs = 6;
-            access-tokens = ["github=${secrets.github.api}"];
+            access-tokens = ["github=${config.age.secrets.github.authtoken.path}"];
             extra-substituters = [
-              "${secrets.cachix.quinneden.url}"
-              "${secrets.cachix.nixos-asahi.url}"
+              "${config.age.secrets.cachix.quinneden.url.path}"
+              "${config.age.secrets.cachix.nixos-asahi.url.path}"
               "https://cache.lix.systems"
             ];
             # extra-trusted-substituters = config.nix.settings.substituters;
             extra-trusted-public-keys = [
-              "${secrets.cachix.quinneden.public-key}"
-              "${secrets.cachix.nixos-asahi.public-key}"
+              "${config.age.secrets.cachix.quinneden.public-key.path}"
+              "${config.age.secrets.cachix.nixos-asahi.public-key.path}"
               "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
             ];
           };

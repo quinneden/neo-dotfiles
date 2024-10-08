@@ -8,5 +8,15 @@ let
   systems = [macos nixos];
 in
 {
-  "common.age".publicKeys = users ++ systems;
+  "secrets/cachix/nixos-asahi/authtoken.age".publicKeys = users ++ systems;
+  "secrets/cachix/nixos-asahi/pubkey.age".publicKeys = users ++ systems;
+  "secrets/cachix/nixos-asahi/url.age".publicKeys = users ++ systems;
+  "secrets/cachix/quinneden/authtoken.age".publicKeys = users ++ systems;
+  "secrets/cachix/quinneden/pubkey.age".publicKeys = users ++ systems;
+  "secrets/cachix/quinneden/url.age".publicKeys = users ++ systems;
+  "secrets/cachix/personal-authtoken.age".publicKeys = users ++ systems;
+  "secrets/github/authtoken.age".publicKeys = users ++ systems;
+  "secrets/github/ghcr-authtoken.age".publicKeys = users ++ systems;
+  "secrets/gitlab/authtoken.age".publicKeys = users ++ systems;
+  "secrets/cloudflare.age".publicKeys = users ++ systems;
 }

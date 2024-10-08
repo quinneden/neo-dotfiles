@@ -5,7 +5,6 @@
     ./distrobox
     ./extra
     ./firefox
-    ./fonts
     ./git
     ./gtk
     ./hyprland

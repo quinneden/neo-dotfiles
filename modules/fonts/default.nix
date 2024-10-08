@@ -26,6 +26,7 @@ in {
       })
     ];
     fontconfig = {
+      enable = true;
       hinting.autohint = true;
     };
   };

@@ -30,7 +30,7 @@
         ".config/wpg/templates/ags.css.base".source = ./config/colors_wal.css;
         ".config/ags/colors.css".source =
           config.lib.file.mkOutOfStoreSymlink
-          "/home/zeroth/.config/wpg/templates/ags.css";
+          "/home/quinn/.config/wpg/templates/ags.css";
       }
       else {
         ".config/hypr/colors.css".source = ./config/colors_default.css;

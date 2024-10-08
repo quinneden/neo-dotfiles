@@ -12,7 +12,7 @@
   ];
 
   home.sessionVariables = {
-    LAST_WALLPAPER_PATH = "/home/zeroth/.local/state/lastwallpaper";
+    LAST_WALLPAPER_PATH = "/home/quinn/.local/state/lastwallpaper";
   };
 
   home.file =
@@ -27,7 +27,7 @@
       }
       (if wal then {
         ".config/wpg/templates/hyprland.conf.base".source = ./colors_wal.conf;
-        ".config/hypr/colors.conf".source = config.lib.file.mkOutOfStoreSymlink "/home/zeroth/.config/wpg/templates/hyprland.conf";
+        ".config/hypr/colors.conf".source = config.lib.file.mkOutOfStoreSymlink "/home/quinn/.config/wpg/templates/hyprland.conf";
       }
       else {
         ".config/hypr/colors.conf".source = ./colors_default.conf;

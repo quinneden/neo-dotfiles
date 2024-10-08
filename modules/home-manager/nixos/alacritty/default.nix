@@ -80,7 +80,7 @@ in {
     ".config/wpg/templates/alacritty.toml.base".text = toml true;
     ".config/alacritty/alacritty.toml".source =
       config.lib.file.mkOutOfStoreSymlink
-      "/home/zeroth/.config/wpg/templates/alacritty.toml";
+      "/home/quinn/.config/wpg/templates/alacritty.toml";
   }
   else {
     ".config/alacritty/alacritty.toml".text = toml false;

@@ -1,6 +1,6 @@
 {
   imports = [
-    ../modules/packages.nix
+    ../packages
     ./blocks.nix
     ./cfg.nix
     ./commit.nix

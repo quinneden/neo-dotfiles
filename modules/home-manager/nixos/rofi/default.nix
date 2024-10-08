@@ -55,7 +55,7 @@ in {
       ".config/wpg/templates/rofi.rasi.base".text = colors true;
       ".local/share/rofi/themes/colors.rasi".source =
         config.lib.file.mkOutOfStoreSymlink
-        "/home/zeroth/.config/wpg/templates/rofi.rasi";
+        "/home/quinn/.config/wpg/templates/rofi.rasi";
     } else {
       ".local/share/rofi/themes/colors.rasi".text = colors false;
     })

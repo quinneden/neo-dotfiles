@@ -1,7 +1,6 @@
 {
   config,
   dotdir,
-  secrets,
   inputs,
   pkgs,
   lib,
@@ -10,10 +9,34 @@
   username = "quinn";
 in {
   imports = [
+    ../../modules/fonts
+    ../../modules/secrets
+    ./hardware.nix
     inputs.home-manager.nixosModules.default
     inputs.nixos-apple-silicon.nixosModules.default
-    inputs.agenix.nixosModules.default
   ];
+
+  # age.secrets = {
+  #   cachix = {
+  #     nixos-asahi = {
+  #       authtoken.file = ../../secrets/cachix/nixos-asahi/authtoken.age;
+  #       pubkey.file = ../../secrets/cachix/nixos-asahi/pubkey.age;
+  #       url.file = ../../secrets/cachix/nixos-asahi/url.age;
+  #     };
+  #     quinneden = {
+  #       authtoken.file = ../../secrets/cachix/quinneden/authtoken.age;
+  #       pubkey.file = ../../secrets/cachix/quinneden/pubkey.age;
+  #       url.file = ../../secrets/cachix/quinneden/url.age;
+  #     };
+  #   };
+  #   github = {
+  #     authtoken.file = ../../secrets/github/authtoken.age;
+  #     ghcr-authtoken.file = ../../secrets/github/ghcr-authtoken.age;
+  #   };
+  #   gitlab = {
+  #     authtoken.file = ../../secrets/gitlab/authtoken.age;
+  #   };
+  # };
 
   boot = {
     tmp.cleanOnBoot = true;
@@ -50,11 +73,6 @@ in {
     ];
   };
 
-  age = {
-    secrets.common.file = secrets/common.age;
-    identityPaths = [ "/var/lib/persistent/ssh_host_ed25519_key" ];
-  };
-
   time.timeZone = "America/Los_Angeles";
   i18n.defaultLocale = "en_US.UTF-8";
   i18n.extraLocaleSettings = {
@@ -75,12 +93,13 @@ in {
     backupFileExtension = "backup";
     useGlobalPkgs = true;
     useUserPackages = true;
-    extraSpecialArgs = {inherit inputs dotdir secrets;};
+    extraSpecialArgs = {inherit inputs dotdir;};
     users.${username} = {
       home.username = username;
       home.homeDirectory = "/home/${username}";
       imports = [
         ./home.nix
+        ../modules/secrets
       ];
     };
   };
@@ -92,18 +111,18 @@ in {
   ];
 
   nix.settings = {
-    access-tokens = ["github=${secrets.github.api}"];
+    access-tokens = ["github=${config.age.secrets.github.authtoken.path}"];
     experimental-features = ["nix-command" "flakes"];
     auto-optimise-store = true;
     trusted-users = ["quinn" "root"];
     extra-nix-path = "nixpkgs=flake:nixpkgs";
     warn-dirty = false;
     extra-substituters = [
-      "${secrets.cachix.nixos-asahi.url}"
+      "${config.age.secrets.cachix.nixos-asahi.url.path}"
       "https://cache.lix.systems"
     ];
     extra-trusted-public-keys = [
-      "${secrets.cachix.nixos-asahi.public-key}"
+      "${config.age.secrets.cachix.nixos-asahi.pubkey.path}"
       "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
     ];
   };

@@ -41,8 +41,6 @@
     self,
     ...
   }: let
-    # secrets = with inputs; builtins.fromJSON (builtins.readFile "${self}/secrets/secrets.json");
-    secrets = with inputs; builtins.fromJSON (builtins.readFile "config.age.secrets.secrets.path");
     dotDir = "$HOME/.dotfiles";
     forAllSystems = function:
       nixpkgs.lib.genAttrs [
@@ -68,7 +66,7 @@
     in {
       "macos" = nix-darwin.lib.darwinSystem {
         inherit system pkgs;
-        specialArgs = {inherit inputs dotDir secrets;};
+        specialArgs = {inherit inputs dotDir;};
         modules = [
           ./hosts/darwin
           home-manager.darwinModules.default
@@ -87,10 +85,11 @@
     in {
       "nixos" = nixpkgs.lib.nixosSystem {
         inherit pkgs system;
-        specialArgs = {inherit inputs dotDir secrets self;};
+        specialArgs = {inherit inputs dotDir self;};
         modules = [
           ./hosts/nixos
           lix-module.nixosModules.lixFromNixpkgs
+          agenix.nixosModules.default
         ];
       };
     };
