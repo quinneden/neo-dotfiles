@@ -111,6 +111,11 @@ in {
 
   programs.dconf.enable = true;
 
+  programs.gnupg.agent = {
+     enable = true;
+     pinentryPackage = pkgs.pinentry-curses;
+  };
+
   programs.direnv = {
     package = pkgs.direnv;
     silent = false;
