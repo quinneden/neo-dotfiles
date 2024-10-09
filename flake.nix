@@ -68,7 +68,7 @@
         specialArgs = {inherit inputs dotdir secrets;};
         modules = [
           ./hosts/darwin
-          lix-module.nixosModules.lixFromNixpkgs
+          lix-module.nixosModules.default
         ];
       };
     };

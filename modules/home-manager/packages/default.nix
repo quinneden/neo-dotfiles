@@ -5,7 +5,7 @@
 }: {
   imports = [
     ./packages-module.nix
-  #   ../../scripts
+    # ../../scripts
   ];
 
   packages = with pkgs; {
