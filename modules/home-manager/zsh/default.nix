@@ -87,7 +87,7 @@ in {
       fpath+=("/opt/homebrew/share/zsh/site-functions" "${pkgs.lix}/share/zsh/site-functions" "${
         if pkgs.stdenv.isDarwin
         then "/opt/homebrew/share/zsh/site-functions"
-        else null
+        else ""
       }")
     '';
     initExtra =
@@ -95,7 +95,7 @@ in {
       + (
         if pkgs.stdenv.isDarwin
         then initExtraDarwin
-        else null
+        else ""
       );
     sessionVariables =
       {

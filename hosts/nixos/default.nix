@@ -37,7 +37,6 @@
 
   users.users.quinn = {
     isNormalUser = true;
-    initialPassword = username;
     shell = "${pkgs.zsh}/bin/zsh";
     extraGroups = [
       "networkmanager"

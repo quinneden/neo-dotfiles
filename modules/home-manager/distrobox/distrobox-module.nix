@@ -5,7 +5,7 @@
   ...
 }: let
   inherit (lib) types;
-  inherit (lib.modules) lib.mkIf;
+  inherit (lib.modules) mkIf;
   inherit (lib.options) mkOption mkEnableOption;
 
   cfg = config.programs.distrobox;
