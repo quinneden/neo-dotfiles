@@ -16,10 +16,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-    lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.0.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    lix-module.url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.0.tar.gz";
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -59,8 +56,8 @@
       system = "aarch64-darwin";
       pkgs = import nixpkgs {
         inherit system;
-        # overlays = [lix-module.overlays.lixFromNixpkgs];
         config.allowUnfree = true;
+        overlays = [lix-module.overlays.lixFromNixpkgs];
       };
     in {
       "macos" = nix-darwin.lib.darwinSystem {
@@ -68,7 +65,7 @@
         specialArgs = {inherit inputs dotdir secrets;};
         modules = [
           ./hosts/darwin
-          lix-module.nixosModules.default
+          lix-module.nixosModules.lixFromNixpkgs
         ];
       };
     };
