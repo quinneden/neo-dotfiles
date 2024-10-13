@@ -52,6 +52,7 @@
       "pkg-config"
       "gobject-introspection"
       "gptfdisk"
+      "ipython"
       "jq"
       "just"
       "ldid"
