@@ -7,6 +7,7 @@
   commonAliases = {
     cddf = "cd $dotdir";
     cddl = "cd ~/Downloads";
+    code = "codium";
     gst = "git status";
     gsur = "git submodule update --init --recursive";
     l = "eza -la --group-directories-first";
@@ -29,7 +30,6 @@
 
   linuxAliases = {
     bs = "stat -c%s";
-    code = "codium";
     db = "distrobox";
   };
 
