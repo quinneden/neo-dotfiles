@@ -4,12 +4,14 @@
   config,
   secrets,
   ...
-}: let
+}:
+let
   commit-status = pkgs.fetchurl {
     url = "https://gist.github.com/quinneden/378834a3a54dec450b5462935a78a462/raw/5e4c64051e181b62d2f4128c863a5c468ccb1bdc/git-commit-status";
     hash = "sha256-MU3ZRba7Bdkjf7Ao03tzULVSD48Pe4DLRNO7bEe8cTY=";
   };
-in {
+in
+{
   programs.git = {
     enable = true;
     extraConfig = {

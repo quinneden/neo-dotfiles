@@ -1,9 +1,11 @@
-{pkgs, ...}: let
+{ pkgs, ... }:
+let
   FishTank = pkgs.fetchurl {
     url = "https://raw.githubusercontent.com/dexpota/kitty-themes/master/themes/fishtank.conf";
     hash = "";
   };
-in {
+in
+{
   programs.kitty = {
     enable = true;
     font = {

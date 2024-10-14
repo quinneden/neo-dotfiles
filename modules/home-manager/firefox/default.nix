@@ -3,43 +3,50 @@
   lib,
   inputs,
   ...
-}: {
+}:
+{
   home.sessionVariables = {
     XDG_CURRENT_DESKTOP = "sway";
   };
 
-  xdg.mimeApps = let
-    x = "firefox.desktop";
-  in {
-    defaultApplications = let
-      f = [x];
-    in {
-      "x-scheme-handler/http" = f;
-      "x-scheme-handler/https" = f;
-      "x-scheme-handler/chrome" = f;
-      "text/html" = f;
-      "application/x-extension-htm" = f;
-      "application/x-extension-html" = f;
-      "application/x-extension-shtml" = f;
-      "application/xhtml+xml" = f;
-      "application/x-extension-xhtml" = f;
-      "application/x-extension-xht" = f;
+  xdg.mimeApps =
+    let
+      x = "firefox.desktop";
+    in
+    {
+      defaultApplications =
+        let
+          f = [ x ];
+        in
+        {
+          "x-scheme-handler/http" = f;
+          "x-scheme-handler/https" = f;
+          "x-scheme-handler/chrome" = f;
+          "text/html" = f;
+          "application/x-extension-htm" = f;
+          "application/x-extension-html" = f;
+          "application/x-extension-shtml" = f;
+          "application/xhtml+xml" = f;
+          "application/x-extension-xhtml" = f;
+          "application/x-extension-xht" = f;
+        };
+      associations.added =
+        let
+          f = x;
+        in
+        {
+          "x-scheme-handler/http" = f;
+          "x-scheme-handler/https" = f;
+          "x-scheme-handler/chrome" = f;
+          "text/html" = f;
+          "application/x-extension-htm" = f;
+          "application/x-extension-html" = f;
+          "application/x-extension-shtml" = f;
+          "application/xhtml+xml" = f;
+          "application/x-extension-xhtml" = f;
+          "application/x-extension-xht" = f;
+        };
     };
-    associations.added = let
-      f = x;
-    in {
-      "x-scheme-handler/http" = f;
-      "x-scheme-handler/https" = f;
-      "x-scheme-handler/chrome" = f;
-      "text/html" = f;
-      "application/x-extension-htm" = f;
-      "application/x-extension-html" = f;
-      "application/x-extension-shtml" = f;
-      "application/xhtml+xml" = f;
-      "application/x-extension-xhtml" = f;
-      "application/x-extension-xht" = f;
-    };
-  };
 
   programs.firefox = {
     enable = true;
@@ -48,14 +55,14 @@
         force = true;
         default = "Google";
         privateDefault = "Google";
-        order = ["Google"];
+        order = [ "Google" ];
       };
-      bookmarks = {};
+      bookmarks = { };
       extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
         ublock-origin
         darkreader
       ];
-      bookmarks = {};
+      bookmarks = { };
       settings = {
         "browser.startup.homepage" = "about:home";
 
@@ -132,16 +139,40 @@
         "browser.uiCustomization.state" = builtins.toJSON {
           currentVersion = 20;
           newElementCount = 5;
-          dirtyAreaCache = ["nav-bar" "PersonalToolbar" "toolbar-menubar" "TabsToolbar" "widget-overflow-fixed-list"];
+          dirtyAreaCache = [
+            "nav-bar"
+            "PersonalToolbar"
+            "toolbar-menubar"
+            "TabsToolbar"
+            "widget-overflow-fixed-list"
+          ];
           placements = {
-            PersonalToolbar = [];
-            TabsToolbar = ["tabbrowser-tabs" "new-tab-button" "alltabs-button"];
-            nav-bar = ["back-button" "forward-button" "stop-reload-button" "urlbar-container" "downloads-button" "ublock0_raymondhill_net-browser-action" "_testpilot-containers-browser-action" "reset-pbm-toolbar-button" "unified-extensions-button"];
-            toolbar-menubar = ["menubar-items"];
-            unified-extensions-area = [];
-            widget-overflow-fixed-list = [];
+            PersonalToolbar = [ ];
+            TabsToolbar = [
+              "tabbrowser-tabs"
+              "new-tab-button"
+              "alltabs-button"
+            ];
+            nav-bar = [
+              "back-button"
+              "forward-button"
+              "stop-reload-button"
+              "urlbar-container"
+              "downloads-button"
+              "ublock0_raymondhill_net-browser-action"
+              "_testpilot-containers-browser-action"
+              "reset-pbm-toolbar-button"
+              "unified-extensions-button"
+            ];
+            toolbar-menubar = [ "menubar-items" ];
+            unified-extensions-area = [ ];
+            widget-overflow-fixed-list = [ ];
           };
-          seen = ["developer-button" "ublock0_raymondhill_net-browser-action" "_testpilot-containers-browser-action"];
+          seen = [
+            "developer-button"
+            "ublock0_raymondhill_net-browser-action"
+            "_testpilot-containers-browser-action"
+          ];
         };
       };
     };

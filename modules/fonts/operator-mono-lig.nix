@@ -1,4 +1,4 @@
-{pkgs}:
+{ pkgs }:
 pkgs.stdenv.mkDerivation {
   pname = "operator-mono-lig";
   version = "1.0";

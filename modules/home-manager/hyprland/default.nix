@@ -4,7 +4,8 @@
   lib,
   inputs,
   ...
-}: {
+}:
+{
   home.packages = with pkgs; [
     inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland
     swww
@@ -20,9 +21,10 @@
     LAST_WALLPAPER_PATH = "/home/quinn/.local/state/lastwallpaper";
   };
 
-  home.file = let
-    wal = config.wal.enable;
-  in
+  home.file =
+    let
+      wal = config.wal.enable;
+    in
     lib.mkMerge [
       {
         ".config/hypr/hyprland.conf".source = ./hyprland.conf;
@@ -32,14 +34,15 @@
         ".config/hypr/startup.conf".source = ./startup.conf;
       }
       (
-        if wal
-        then {
-          ".config/wpg/templates/hyprland.conf.base".source = ./colors_wal.conf;
-          ".config/hypr/colors.conf".source = config.lib.file.mkOutOfStoreSymlink "/home/quinn/.config/wpg/templates/hyprland.conf";
-        }
-        else {
-          ".config/hypr/colors.conf".source = ./colors_default.conf;
-        }
+        if wal then
+          {
+            ".config/wpg/templates/hyprland.conf.base".source = ./colors_wal.conf;
+            ".config/hypr/colors.conf".source = config.lib.file.mkOutOfStoreSymlink "/home/quinn/.config/wpg/templates/hyprland.conf";
+          }
+        else
+          {
+            ".config/hypr/colors.conf".source = ./colors_default.conf;
+          }
       )
     ];
 }

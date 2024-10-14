@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   xdg.configFile."micro/bindings.json".text = ''
     {
       "\u001b[1;2A": "SelectUp",
