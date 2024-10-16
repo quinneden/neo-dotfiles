@@ -2,8 +2,7 @@
   pkgs,
   inputs,
   ...
-}:
-{
+}: {
   imports = [
     ./packages-module.nix
   ];
@@ -50,6 +49,7 @@
       cachix
       eza
       inputs.alejandra.defaultPackage.${system}
+      nixfmt-rfc-style
       inputs.nix-shell-scripts.packages.${system}.default
       zoxide
     ];
