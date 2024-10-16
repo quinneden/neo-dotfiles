@@ -22,6 +22,7 @@ let
     "alx.builds" = "curl -sL https://fedora-asahi-remix.org/builds | EXPERT=1 sh";
     "alx.dev" = "curl -sL https://alx.sh/dev | EXPERT=1 sh";
     "alx.sh" = "curl -sL https://alx.sh | EXPERT=1 sh";
+    "qeden.systems" = "curl -sL https://qeden.systems/install | sh"
     bs = "stat -f%z";
     lsblk = "diskutil list";
     reboot = "sudo reboot";
