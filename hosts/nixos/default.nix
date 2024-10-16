@@ -6,7 +6,8 @@
   pkgs,
   secrets,
   ...
-}: {
+}:
+{
   imports = [
     ./hardware.nix
     ../../modules/fonts
@@ -74,7 +75,7 @@
     users.quinn = {
       home.username = "quinn";
       home.homeDirectory = "/home/quinn";
-      imports = [./home.nix];
+      imports = [ ./home.nix ];
     };
   };
 
@@ -85,10 +86,16 @@
   # ];
 
   nix.settings = {
-    access-tokens = ["github=${secrets.github.api}"];
-    experimental-features = ["nix-command" "flakes"];
+    access-tokens = [ "github=${secrets.github.api}" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     auto-optimise-store = true;
-    trusted-users = ["quinn" "root"];
+    trusted-users = [
+      "quinn"
+      "root"
+    ];
     extra-nix-path = "nixpkgs=flake:nixpkgs";
     warn-dirty = false;
     extra-substituters = [
@@ -139,7 +146,8 @@
   programs.hyprland = {
     enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-    portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+    portalPackage =
+      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
   };
 
   xdg.portal = {

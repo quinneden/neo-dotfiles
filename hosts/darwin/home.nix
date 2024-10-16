@@ -3,7 +3,8 @@
   config,
   pkgs,
   ...
-}: {
+}:
+{
 
   home.file.".hushlogin".text = "";
 

@@ -3,10 +3,12 @@
   inputs,
   lib,
   ...
-}: let
-  operator-mono-lig = pkgs.callPackage ./operator-mono-lig.nix {inherit pkgs;};
-  operator-mono-nf = pkgs.callPackage ./operator-mono-nf.nix {inherit pkgs;};
-in {
+}:
+let
+  operator-mono-lig = pkgs.callPackage ./operator-mono-lig.nix { inherit pkgs; };
+  operator-mono-nf = pkgs.callPackage ./operator-mono-nf.nix { inherit pkgs; };
+in
+{
   fonts = {
     packages = with pkgs; [
       operator-mono-lig

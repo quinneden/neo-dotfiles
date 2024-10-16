@@ -1,4 +1,4 @@
-{pkgs}:
+{ pkgs }:
 pkgs.stdenv.mkDerivation {
   pname = "operator-mono-nf";
   version = "1.0";

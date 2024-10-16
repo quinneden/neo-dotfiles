@@ -29,63 +29,86 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
-  outputs = inputs @ {
-    home-manager,
-    lix-module,
-    nix-darwin,
-    nixos-apple-silicon,
-    nixpkgs,
-    self,
-    ...
-  }: let
-    dotdir = "$HOME/.dotfiles";
-    secrets = builtins.fromJSON (builtins.readFile ./secrets/common.json);
-    forAllSystems = function:
-      nixpkgs.lib.genAttrs [
-        "aarch64-linux"
-        "aarch64-darwin"
-      ] (system:
-        function (import nixpkgs {
-          inherit system;
-          config.allowUnfree = true;
-        }));
-  in {
-    formatter = forAllSystems (system: inputs.alejandra.defaultPackage.${system});
+  outputs =
+    inputs@{
+      home-manager,
+      lix-module,
+      nix-darwin,
+      nixos-apple-silicon,
+      nixpkgs,
+      self,
+      ...
+    }:
+    let
+      dotdir = "$HOME/.dotfiles";
+      secrets = builtins.fromJSON (builtins.readFile ./secrets/common.json);
+      forAllSystems =
+        function:
+        nixpkgs.lib.genAttrs
+          [
+            "aarch64-linux"
+            "aarch64-darwin"
+          ]
+          (
+            system:
+            function (
+              import nixpkgs {
+                inherit system;
+                config.allowUnfree = true;
+              }
+            )
+          );
+    in
+    {
+      formatter = forAllSystems (pkgs: pkgs.nixfmt-rfc-style);
 
-    darwinConfigurations = let
-      system = "aarch64-darwin";
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-        overlays = [lix-module.overlays.lixFromNixpkgs];
-      };
-    in {
-      "macos" = nix-darwin.lib.darwinSystem {
-        inherit system pkgs;
-        specialArgs = {inherit inputs dotdir secrets;};
-        modules = [
-          ./hosts/darwin
-          lix-module.nixosModules.lixFromNixpkgs
-        ];
-      };
-    };
+      darwinConfigurations =
+        let
+          system = "aarch64-darwin";
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+            overlays = [ lix-module.overlays.lixFromNixpkgs ];
+          };
+        in
+        {
+          "macos" = nix-darwin.lib.darwinSystem {
+            inherit system pkgs;
+            specialArgs = {
+              inherit inputs dotdir secrets;
+            };
+            modules = [
+              ./hosts/darwin
+              lix-module.nixosModules.lixFromNixpkgs
+            ];
+          };
+        };
 
-    nixosConfigurations = let
-      system = "aarch64-linux";
-      pkgs = import nixpkgs {
-        inherit system;
-        config.allowUnfree = true;
-        overlays = [nixos-apple-silicon.overlays.default];
-      };
-    in {
-      "nixos" = nixpkgs.lib.nixosSystem {
-        inherit pkgs system;
-        specialArgs = {inherit inputs dotdir self secrets;};
-        modules = [
-          ./hosts/nixos
-          lix-module.nixosModules.default
-        ];
-      };
+      nixosConfigurations =
+        let
+          system = "aarch64-linux";
+          pkgs = import nixpkgs {
+            inherit system;
+            config.allowUnfree = true;
+            overlays = [ nixos-apple-silicon.overlays.default ];
+          };
+        in
+        {
+          "nixos" = nixpkgs.lib.nixosSystem {
+            inherit pkgs system;
+            specialArgs = {
+              inherit
+                inputs
+                dotdir
+                self
+                secrets
+                ;
+            };
+            modules = [
+              ./hosts/nixos
+              lix-module.nixosModules.default
+            ];
+          };
+        };
     };
-  };
 }

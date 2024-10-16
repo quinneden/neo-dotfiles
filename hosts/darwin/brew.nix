@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   homebrew = {
     taps = [
       "homebrew/bundle"

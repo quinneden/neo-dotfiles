@@ -2,7 +2,8 @@
   config,
   inputs,
   ...
-}: {
+}:
+{
   system = {
     activationScripts.postUserActivation.text = ''
       # activateSettings -u will reload the settings from the database and apply them to the current session,
