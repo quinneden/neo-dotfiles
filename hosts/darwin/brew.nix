@@ -26,6 +26,7 @@
       "aria2"
       "bat"
       "bison"
+      "black"
       "bzip2"
       "lzo"
       "cask"
