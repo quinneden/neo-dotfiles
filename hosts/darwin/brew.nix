@@ -91,7 +91,6 @@
       "rustup"
       "shellcheck"
       "socket_vmnet"
-      "trash"
       "tree"
       "w3m"
       "wget"

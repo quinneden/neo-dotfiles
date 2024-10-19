@@ -3,7 +3,8 @@
   config,
   lib,
   ...
-}: let
+}:
+let
   commonAliases = {
     cddf = "cd $dotdir";
     cddl = "cd ~/Downloads";
@@ -59,70 +60,49 @@
 
   initExtraDarwin = ''[[ $PATH =~ '/nix/store' ]] || eval $(/opt/homebrew/bin/brew shellenv)'';
 in
-  # initExtraBeforeCompInitCommon = ''
-  #   fpath+=("/opt/homebrew/share/zsh/site-functions" "${pkgs.lix}/share/zsh/site-functions" "${if pkgs.stdenv.isDarwin then "/opt/homebrew/share/zsh/site-functions" else null}")
-  # '';
-  # initExtraBeforeCompInitDarwin = ''fpath+=("/opt/homebrew/share/zsh/site-functions")'';
-  {
-    imports = [./starship.nix];
+# initExtraBeforeCompInitCommon = ''
+#   fpath+=("/opt/homebrew/share/zsh/site-functions" "${pkgs.lix}/share/zsh/site-functions" "${if pkgs.stdenv.isDarwin then "/opt/homebrew/share/zsh/site-functions" else null}")
+# '';
+# initExtraBeforeCompInitDarwin = ''fpath+=("/opt/homebrew/share/zsh/site-functions")'';
+{
+  imports = [ ./starship.nix ];
 
-    programs.zsh = {
+  programs.zsh = {
+    enable = true;
+    dotDir = ".config/zsh";
+    shellAliases = commonAliases // (if pkgs.stdenv.isDarwin then darwinAliases else linuxAliases);
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+    oh-my-zsh = {
       enable = true;
-      dotDir = ".config/zsh";
-      shellAliases =
-        commonAliases
-        // (
-          if pkgs.stdenv.isDarwin
-          then darwinAliases
-          else linuxAliases
-        );
-      enableCompletion = true;
-      autosuggestion.enable = true;
-      syntaxHighlighting.enable = true;
-      oh-my-zsh = {
-        enable = true;
-        plugins = [
-          "fzf"
-          "eza"
-          "zoxide"
-          "direnv"
-        ];
-        custom = "${config.xdg.configHome}/zsh";
-      };
-      # initExtraBeforeCompInit = initExtraBeforeCompInitCommon + (if pkgs.stdenv.isDarwin then initExtraBeforeCompInitDarwin else null);
-      initExtraBeforeCompInit = ''
-        fpath+=("/opt/homebrew/share/zsh/site-functions" "${pkgs.lix}/share/zsh/site-functions" "${
-          if pkgs.stdenv.isDarwin
-          then "/opt/homebrew/share/zsh/site-functions"
-          else ""
-        }")
-      '';
-      initExtra =
-        initExtraCommon
-        + (
-          if pkgs.stdenv.isDarwin
-          then initExtraDarwin
-          else ""
-        );
-      sessionVariables =
-        {
-          compdir = "$HOME/.config/zsh/completions";
-          dotdir = "$HOME/.dotfiles";
-          EDITOR = "mi";
-          LANG = "en_US.UTF-8";
-          LC_ALL = "en_US.UTF-8";
-          MICRO_TRUECOLOR = "1";
-          PAGER = "bat --style=grid,numbers --wrap=never";
-        }
-        // (
-          if pkgs.stdenv.isDarwin
-          then darwinVariables
-          else {}
-        )
-        // (
-          if pkgs.stdenv.isLinux
-          then linuxVariables
-          else {}
-        );
+      plugins = [
+        "fzf"
+        "eza"
+        "zoxide"
+        "direnv"
+        "nix-zsh-completions"
+      ];
+      custom = "${config.xdg.configHome}/zsh";
     };
-  }
+    # initExtraBeforeCompInit = initExtraBeforeCompInitCommon + (if pkgs.stdenv.isDarwin then initExtraBeforeCompInitDarwin else null);
+    initExtraBeforeCompInit = ''
+      fpath+=("/opt/homebrew/share/zsh/site-functions" "${pkgs.lix}/share/zsh/site-functions" "${
+        if pkgs.stdenv.isDarwin then "/opt/homebrew/share/zsh/site-functions" else ""
+      }")
+    '';
+    initExtra = initExtraCommon + (if pkgs.stdenv.isDarwin then initExtraDarwin else "");
+    sessionVariables =
+      {
+        compdir = "$HOME/.config/zsh/completions";
+        dotdir = "$HOME/.dotfiles";
+        EDITOR = "mi";
+        LANG = "en_US.UTF-8";
+        LC_ALL = "en_US.UTF-8";
+        MICRO_TRUECOLOR = "1";
+        PAGER = "bat --style=grid,numbers --wrap=never";
+      }
+      // (if pkgs.stdenv.isDarwin then darwinVariables else { })
+      // (if pkgs.stdenv.isLinux then linuxVariables else { });
+  };
+}
