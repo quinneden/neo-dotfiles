@@ -72,6 +72,7 @@
       "ncdu"
       "node"
       "p7zip"
+      "paperkey"
       "pass"
       "perl"
       "pipenv"
@@ -82,6 +83,7 @@
       "pyenv-virtualenv"
       "pygments"
       "qemu"
+      "qrencode"
       "rbenv"
       "rclone"
       "ripgrep"
@@ -97,6 +99,7 @@
       "wget"
       "whalebrew"
       "yapf"
+      "zbar"
       "zlib"
     ];
     masApps = {
