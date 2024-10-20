@@ -53,17 +53,13 @@ let
     for f ($HOME/.config/zsh/functions/*(N.)); do source $f; done
 
     if [[ $TERM_PROGRAM == 'vscode' ]]; then
-      autoload -U promptinit; promptinit
+      autoload -Uz promptinit; promptinit
       prompt pure
     fi
   '';
 
   initExtraDarwin = ''[[ $PATH =~ '/nix/store' ]] || eval $(/opt/homebrew/bin/brew shellenv)'';
 in
-# initExtraBeforeCompInitCommon = ''
-#   fpath+=("/opt/homebrew/share/zsh/site-functions" "${pkgs.lix}/share/zsh/site-functions" "${if pkgs.stdenv.isDarwin then "/opt/homebrew/share/zsh/site-functions" else null}")
-# '';
-# initExtraBeforeCompInitDarwin = ''fpath+=("/opt/homebrew/share/zsh/site-functions")'';
 {
   imports = [ ./starship.nix ];
 

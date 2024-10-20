@@ -89,6 +89,7 @@
       "ruby-install"
       "rust"
       "rustup"
+      "shc"
       "shellcheck"
       "socket_vmnet"
       "tree"
