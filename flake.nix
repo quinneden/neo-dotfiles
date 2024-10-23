@@ -27,6 +27,33 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    # WIP
+    nur.url = "github:nix-community/NUR";
+    nixpkgs-f2k.url = "github:moni-dz/nixpkgs-f2k";
+    crystal = {
+      url = "github:namishh/crystal";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+    };
+
+    hyprland.url = "github:hyprwm/Hyprland";
+
+    darkmatter.url = "gitlab:VandalByte/darkmatter-grub-theme";
+
+    matugen = {
+      url = "github:/InioX/Matugen";
+    };
+
+    swayfx = {
+      url = "github:/WillPower3309/swayfx";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    swayhide.url = "github:/rehanzo/swayhide";
   };
 
   outputs =
@@ -90,7 +117,10 @@
           pkgs = import nixpkgs {
             inherit system;
             config.allowUnfree = true;
-            overlays = [ nixos-apple-silicon.overlays.default ];
+            overlays = [
+              nixos-apple-silicon.overlays.default
+              inputs.crystal.overlays.default
+            ];
           };
         in
         {
@@ -107,6 +137,7 @@
             modules = [
               ./hosts/nixos
               lix-module.nixosModules.default
+              inputs.darkmatter.nixosModule
             ];
           };
         };

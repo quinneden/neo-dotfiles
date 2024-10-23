@@ -4,9 +4,19 @@
   inputs,
   lib,
   pkgs,
+  self,
   secrets,
   ...
 }:
+let
+  flake-compat = builtins.fetchTarball "https://github.com/edolstra/flake-compat/archive/master.tar.gz";
+  my-python-packages =
+    ps: with ps; [
+      material-color-utilities
+      numpy
+      i3ipc
+    ];
+in
 {
   imports = [
     ./hardware.nix
@@ -18,10 +28,21 @@
   boot = {
     tmp.cleanOnBoot = true;
     m1n1CustomLogo = ../../assets/bootlogo-m1n1.png;
+    # loader = {
+    #   timeout = 2;
+    #   systemd-boot.enable = true;
+    #   efi.canTouchEfiVariables = false;
+    # };
     loader = {
-      timeout = 2;
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = false;
+      efi.efiSysMountPoint = "/boot/efi";
+      systemd-boot.enable = false;
+      grub.enable = true;
+      grub.efiSupport = true;
+      grub.device = "nodev";
+      grub.darkmatter-theme = {
+        enable = true;
+        style = "nixos";
+      };
     };
   };
 
@@ -40,12 +61,12 @@
     isNormalUser = true;
     shell = "${pkgs.zsh}/bin/zsh";
     extraGroups = [
+      "adbusers"
+      "audio"
+      "libvirtd"
       "networkmanager"
+      "video"
       "wheel"
-      # "audio"
-      # "video"
-      # "libvirtd"
-      # "docker"
     ];
   };
 
@@ -85,6 +106,23 @@
   #   "/share/edk2"
   # ];
 
+  nixpkgs = {
+    overlays = [
+      outputs.overlays.modifications
+      outputs.overlays.additions
+      inputs.nixpkgs-f2k.overlays.stdenvs
+      inputs.nixpkgs-f2k.overlays.compositors
+      inputs.nur.overlay
+      (final: prev: {
+        awesome = inputs.nixpkgs-f2k.packages.${pkgs.system}.awesome-git;
+      })
+    ];
+    config = {
+      allowUnfreePredicate = _: true;
+      allowUnfree = true;
+    };
+  };
+
   nix.settings = {
     access-tokens = [ "github=${secrets.github.api}" ];
     experimental-features = [
@@ -110,15 +148,24 @@
       "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
       "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
     ];
+    gc = {
+      automatic = true;
+      options = "--delete-older-than 5d";
+    };
+    optimise.automatic = true;
   };
 
   # virtualisation
   virtualisation = {
-    podman.enable = false;
-    libvirtd.enable = false;
+    podman.enable = true;
+    libvirtd.enable = true;
   };
 
+  programs.adb.enable = true;
+
   programs.dconf.enable = true;
+
+  programs.nix-ld.enable = true;
 
   programs.gnupg.agent = {
     enable = true;
@@ -152,9 +199,17 @@
 
   xdg.portal = {
     enable = true;
+    config.common.default = "*";
     extraPortals = [
       pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-wlr
     ];
+  };
+
+  qt = {
+    enable = true;
+    platformTheme = "gtk2";
+    style = "gtk2";
   };
 
   environment.systemPackages = with pkgs; [
@@ -170,16 +225,47 @@
     wget
   ];
 
-  security.sudo.wheelNeedsPassword = false;
+  security = {
+    rtkit.enable = true;
+    sudo.wheelNeedsPassword = false;
+    polkit.enable = true;
+    pam.services.gdm.enableGnomeKeyring = true;
+    pam.services.swaylock = {
+      text = ''
+        auth include login
+      '';
+    };
+  };
+
+  location.provider = "geoclue2";
 
   services = {
     dbus.enable = true;
+    gvfs.enable = true;
+    tlp.enable = true;
     blueman.enable = true;
     flatpak.enable = true;
     openssh.enable = true;
     xserver = {
       enable = true;
-      xkb.layout = "us";
+      layout = "us";
+      xkbVariant = "us";
+      libinput = {
+        enable = true;
+        touchpad = {
+          tapping = true;
+          middleEmulation = false;
+          naturalScrolling = true;
+        };
+      };
+      displayManager = {
+        defaultSession = "none+awesome";
+        startx.enable = true;
+      };
+      windowManager.awesome = {
+        enable = true;
+      };
+      desktopManager.gnome.enable = false;
     };
   };
 
@@ -188,6 +274,70 @@
     NIXOS_OZONE_WL = "1";
     NIXOS_CONFIG = "/home/quinn/.dotfiles";
   };
+
+  environment.systemPackages = with pkgs; [
+    nodejs
+    lutgen
+    bluez
+    unzip
+    bluez-tools
+    inotify-tools
+    udiskie
+    rnix-lsp
+    xorg.xwininfo
+    brightnessctl
+    networkmanager_dmenu
+    (pkgs.python311.withPackages my-python-packages)
+    libnotify
+    xdg-utils
+    gtk3
+    niv
+    st
+    appimage-run
+    jq
+    osu-lazer
+    imgclr
+    grim
+    slop
+    eww-wayland
+    swaylock-effects
+    pstree
+    mpv
+    xdotool
+    brightnessctl
+    pamixer
+    dmenu
+    python3
+    brillo
+    wmctrl
+    slop
+    imv
+    element-desktop
+    maim
+    xclip
+    wirelesstools
+    xorg.xf86inputevdev
+    xorg.xf86inputsynaptics
+    xorg.xf86inputlibinput
+    xorg.xorgserver
+    xorg.xf86videoati
+  ];
+
+  fonts.packages = with pkgs; [
+    material-design-icons
+    dosis
+    material-symbols
+    rubik
+    noto-fonts-color-emoji
+    google-fonts
+  ];
+  fonts.fontconfig = {
+    defaultFonts = {
+      sansSerif = [ "Product Sans" ];
+      monospace = [ "Iosevka Nerd Font" ];
+    };
+  };
+  fonts.enableDefaultPackages = true;
 
   networking = {
     hostName = "nixos-macmini";
