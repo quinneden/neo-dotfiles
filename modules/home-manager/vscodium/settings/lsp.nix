@@ -1,8 +1,9 @@
 {
   lib,
   pkgs,
-}: {
-  "black-formatter.path" = [(lib.getExe pkgs.black)];
+}:
+{
+  "black-formatter.path" = [ (lib.getExe pkgs.black) ];
   "stylua.styluaPath" = lib.getExe pkgs.stylua;
   "Lua.misc.executablePath" = "${pkgs.sumneko-lua-language-server}/bin/lua-language-server";
   "nix.enableLanguageServer" = true;
@@ -11,10 +12,10 @@
   "nix.serverSettings" = {
     "nil" = {
       "formatting" = {
-        "command" = ["nixfmt"];
+        "command" = [ "nixfmt" ];
       };
       "diagnostics" = {
-        "ignored" = ["unused_binding"];
+        "ignored" = [ "unused_binding" ];
       };
     };
   };
