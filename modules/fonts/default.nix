@@ -15,7 +15,7 @@ in
       operator-mono-nf
       source-code-pro
       noto-fonts
-      noto-fonts-cjk
+      noto-fonts-cjk-sans
       font-awesome
       (nerdfonts.override {
         fonts = [

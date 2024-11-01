@@ -32,6 +32,7 @@
       ../../modules/home-manager/extra/micro.nix
       ../../modules/home-manager/git
       ../../modules/home-manager/packages
+      ../../modules/home-manager/vscodium
       ../../modules/home-manager/zsh
     ];
   };

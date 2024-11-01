@@ -21,6 +21,7 @@
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
     nix-shell-scripts.url = "github:quinneden/nix-shell-scripts";
     nixos-apple-silicon = {
       url = "github:tpwrules/nixos-apple-silicon";

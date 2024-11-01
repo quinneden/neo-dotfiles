@@ -15,6 +15,7 @@
       xz
       zip
       zstd
+      nil
     ];
     linux = [
       bat
