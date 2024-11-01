@@ -34,8 +34,9 @@
       "initlua": true,
       "linter": true,
       "literate": true,
+      "pluginchannels": [],
       "pluginrepos": [
-        "https://github.com/quinneden/micro-colors/"
+        "https://raw.githubusercontent.com/quinneden/micro-autofmt/refs/heads/main/repo.json"
       ],
       "parsecursor": true,
       "reload": "auto",

@@ -10,12 +10,14 @@
       "docker"
       "eloston-chromium"
       "eqmac"
+      "hammerspoon"
       "iterm2"
       "macfuse"
       "podman-desktop"
       "utm"
       "vagrant"
       "vscodium"
+      "wezterm"
     ];
     brews = [
       "act"
