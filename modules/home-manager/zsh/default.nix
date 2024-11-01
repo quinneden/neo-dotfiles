@@ -51,11 +51,6 @@ let
     if type z &>/dev/null; then alias cd='z'; fi
 
     for f ($HOME/.config/zsh/functions/*(N.)); do source $f; done
-
-    if [[ $TERM_PROGRAM == 'vscode' ]]; then
-      autoload -Uz promptinit; promptinit
-      prompt pure
-    fi
   '';
 
   initExtraDarwin = ''[[ $PATH =~ '/nix/store' ]] || eval $(/opt/homebrew/bin/brew shellenv)'';

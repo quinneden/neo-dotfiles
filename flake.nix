@@ -28,6 +28,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    mac-app-util.url = "github:hraban/mac-app-util";
   };
 
   outputs =
@@ -81,6 +83,7 @@
             modules = [
               ./hosts/darwin
               lix-module.nixosModules.lixFromNixpkgs
+              inputs.mac-app-util.darwinModules.default
             ];
           };
         };

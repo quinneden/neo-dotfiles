@@ -16,7 +16,7 @@
       "podman-desktop"
       "utm"
       "vagrant"
-      "vscodium"
+      # "vscodium"
       "wezterm"
     ];
     brews = [

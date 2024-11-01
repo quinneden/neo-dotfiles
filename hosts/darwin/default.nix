@@ -28,6 +28,7 @@
       inherit inputs dotdir secrets;
     };
     users.quinn.imports = [
+      inputs.mac-app-util.homeManagerModules.default
       ./home.nix
       ../../modules/home-manager/extra/micro.nix
       ../../modules/home-manager/git
