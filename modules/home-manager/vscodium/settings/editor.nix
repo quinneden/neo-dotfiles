@@ -15,5 +15,5 @@
   "terminal.integrated.fontSize" = 14;
   "terminal.integrated.fontFamily" = "CaskcaydiaCove Nerd Font";
   "terminal.integrated.defaultProfile.linux" = "zsh";
-  "terminal.integrated.shellIntegration.decorationsEnabled" = "false";
+  "terminal.integrated.shellIntegration.decorationsEnabled" = false;
 }

@@ -1,6 +1,6 @@
 # check out the script [.scripts/code-update-installed-exts.sh](https://github.com/alphatechnolog/crazy/tree/main/.scripts/code-update-installed-exts.sh)
 # in order to generate more extensions here when adding more manually.
-{pkgs}:
+{ pkgs }:
 pkgs.vscode-utils.extensionsFromVscodeMarketplace [
   {
     name = "rust-bundle";
